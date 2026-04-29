@@ -1,0 +1,110 @@
+
+
+/** Start Block Kit CSS: 141-3-1d55f1e76be9fb1a8d9de88accbe962f **/
+
+.envato-kit-138-bracket .elementor-widget-container > *:before {
+	content: "[";
+	color: #ffab00;
+	display: inline-block;
+	margin-right: 4px;
+	line-height: 1em;
+	position: relative;
+	top: -1px;
+}
+
+.envato-kit-138-bracket .elementor-widget-container > *:after {
+	content: "]";
+	color: #ffab00;
+	display: inline-block;
+	margin-left: 4px;
+	line-height: 1em;
+	position: relative;
+	top: -1px;
+}
+
+/** End Block Kit CSS: 141-3-1d55f1e76be9fb1a8d9de88accbe962f **/
+
+.woocommerce-product-details__short-description {
+	display: flex !important;
+	flex-direction: row !important;
+	flex-wrap: wrap !important;
+	align-items: center !important;
+	justify-content: flex-start !important;
+	gap: 15px !important;
+	line-height: 0 !important;
+}
+
+	.woocommerce-product-details__short-description a:hover img {
+		transform: translateY(-3px) scale(1.1);
+		filter: brightness(1.1); /* Makes the logo slightly more vibrant */
+		box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+	}
+
+/* Center all text and elements within the product loop */
+.woocommerce ul.products li.product {
+	text-align: center !important;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+
+
+	/* Optional: Ensure buttons take up consistent width while centered */
+	.woocommerce ul.products li.product .button {
+		margin-left: auto;
+		margin-right: auto;
+		display: inline-block;
+		width: auto;
+	}
+
+/* Wrapper positioning */
+.custom-back-button-wrapper {
+	margin-top: 10px;
+	margin-bottom: 25px;
+	display: flex;
+	justify-content: flex-start;
+}
+
+	/* Button Styling */
+	.custom-back-button-wrapper .back-to-cat-btn {
+		background-color: #f7941d !important; /* Vasantha Orange */
+		color: #ffffff !important;
+		padding: 10px 20px !important;
+		font-size: 14px;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.5px;
+		border: none;
+		border-radius: 4px;
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		transition: all 0.3s ease;
+		box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+	}
+
+		/* Hover State */
+		.custom-back-button-wrapper .back-to-cat-btn:hover {
+			background-color: #2e3192 !important; /* Logo Blue */
+			color: #ffffff !important;
+			box-shadow: 0 4px 12px rgba(46, 49, 146, 0.2);
+			transform: translateY(-1px);
+		}
+
+		/* Active/Click State */
+		.custom-back-button-wrapper .back-to-cat-btn:active {
+			transform: translateY(0);
+		}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+	.custom-back-button-wrapper {
+		justify-content: center; /* Centers the button on mobile for better thumb reach */
+		margin-bottom: 15px;
+	}
+}
+
+.product_meta {
+	display: none !important
+}
