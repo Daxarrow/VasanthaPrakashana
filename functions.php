@@ -276,7 +276,7 @@ function display_short_description_on_shop() {
 	if ( ! $product ) {
 		$product = wc_get_product( get_the_id() );
 	}
-	
+
 	$short_description = $product->get_short_description();
 
 	if ( ! empty( $short_description ) ) {
@@ -286,9 +286,9 @@ function display_short_description_on_shop() {
 				display: flex !important;
 				flex-direction: row !important;
 				flex-wrap: wrap !important; /* Allows items to drop to the next line */
-				align-items: center !important; 
-				justify-content: center !important; 
-				gap: 5px !important; 
+				align-items: center !important;
+				justify-content: center !important;
+				gap: 5px !important;
 				margin: 5px 0 !important;
 				padding: 0 !important;
 				text-align: center;
@@ -303,7 +303,7 @@ function display_short_description_on_shop() {
 			}
 
 			/* Target the Author text specifically */
-			.shop-short-description p, 
+			.shop-short-description p,
 			.shop-short-description a[href*="author"],
 			.shop-short-description > a:last-child {
 				flex: 0 0 100% !important; /* Forces this element to take up 100% width */
@@ -315,18 +315,18 @@ function display_short_description_on_shop() {
 			.shop-short-description a:hover img {
 				transform: translateY(-3px) scale(1.1);
 			}
-		</style>		
+		</style>
 		<?php
-		
+
 		// Clean the description to separate images from text
 		// We strip the <p> tags the editor adds so our flexbox handles the spacing
 		$clean_description = strip_tags($short_description, '<a><img>');
-		
+
 		echo '<div class="shop-short-description">';
 			// We wrap the description in a container that forces the row/column logic
 			echo preg_replace(
-				'/(<a[^>]*><img[^>]*><\/a>)/i', 
-				'<div class="icon-container">$1</div>', 
+				'/(<a[^>]*><img[^>]*><\/a>)/i',
+				'<div class="icon-container">$1</div>',
 				$short_description
 			);
 		echo '</div>';
@@ -358,7 +358,7 @@ function display_short_description_on_shop_old() {
 				line-height: 1 !important;
 			}
 
-			
+
 			.shop-short-description img
 			 {
 				display: block !important;
@@ -367,9 +367,9 @@ function display_short_description_on_shop_old() {
 				margin-left: 0px !important;
 				align-items: center;
 				transition: transform 0.3s ease, filter 0.3s ease, box-shadow 0.3s ease;
-    		
+
 			}
-			
+
 			.shop-short-description a {
 				display: flex !important;
 				align-items: center !important;
@@ -378,8 +378,8 @@ function display_short_description_on_shop_old() {
 				margin: 0 !important;
 				border: none !important;
 			}
-			
-		
+
+
 						/* Hover Effect */
 			.shop-short-description a:hover img {
 				transform: translateY(-3px) scale(1.1);
@@ -388,10 +388,10 @@ function display_short_description_on_shop_old() {
 			}
 			/*.shop-short-description img:hover {
   				transform: translateY(-5px) scale(1.1); /* Lifts up 5px and grows 10% */
-    			/*filter: brightness(1.1);  Makes the logo slightly more vibrant 
+    			/*filter: brightness(1.1);  Makes the logo slightly more vibrant
     			box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
 			}*/
-			
+
 			@media only screen and (max-width: 480px) {
 				.shop-short-description {
 					justify-content: center; /* Centers the logos on mobile product cards */
@@ -402,23 +402,25 @@ function display_short_description_on_shop_old() {
 				.shop-short-description img {
 					max-height: 25px; /* Smaller logos so all 3 fit in one row on mobile */
 				}
-				
+
 				.shop-short-description img:hover {
   					transform: scale(1.1); /* Zooms the image to 110% of its original size on hover */
 				}
 			}
-			
-   		</style>		
+
+   		</style>
         <?php
-		
+
 		//$short_description = apply_filters( 'woocommerce_short_description', $product->get_short_description() );
-		
+
 		echo '<div class="shop-short-description">' . $short_description . '</div>';
 	} else {
 		// Display your placeholder text
 		echo '<span> - </span>';
 	}
 }
+
+
 
 /**
  * Remove WooCommerce breadcrumbs and replace with a "Back to Category" button
@@ -428,7 +430,7 @@ add_action('init', 'custom_replace_breadcrumbs');
 function custom_replace_breadcrumbs() {
     // 1. Remove the default breadcrumbs
     remove_action('woocommerce_before_main_content', 'woocommerce_breadcrumb', 20);
-    
+
     // 2. Hook in our custom button
     add_action('woocommerce_before_main_content', 'custom_back_button', 20);
 }
@@ -436,11 +438,11 @@ function custom_replace_breadcrumbs() {
 function custom_back_button() {
     if (is_product()) {
         global $post;
-        
+
         // Find the category slug for the current product
         $slug_to_use = '';
         $terms = get_the_terms($post->ID, 'product_cat');
-        
+
         if ($terms && !is_wp_error($terms)) {
             $main_term = $terms[0];
             // If it's a sub-category, get the top-level parent (for the main Elementor tabs)
@@ -456,8 +458,8 @@ function custom_back_button() {
 
         echo '<div class="custom-back-button-wrapper" style="margin-bottom: 20px;">';
         // We pass the slug to the JS using 'data-category'
-        echo '<a href="#" id="dynamic-back-btn" 
-                 data-category="' . esc_attr($slug_to_use) . '" 
+        echo '<a href="#" id="dynamic-back-btn"
+                 data-category="' . esc_attr($slug_to_use) . '"
                  class="button back-to-cat-btn">← Go Back</a>';
         echo '</div>';
     }
@@ -477,7 +479,7 @@ function navigation_from_single_product() {
         const productCatSlug = backBtn.getAttribute('data-category');
 
         if (referrer && referrer.includes('/categories')) {
-            // User came from Categories: 
+            // User came from Categories:
             // 1. Check if the referrer already has the param
             // 2. If not, add it so the tab highlights
             let targetUrl = referrer;
@@ -485,7 +487,7 @@ function navigation_from_single_product() {
                 const separator = referrer.includes('?') ? '&' : '?';
                 targetUrl = referrer + separator + 'select_cat=' + productCatSlug;
             }
-            
+
             backBtn.href = targetUrl;
             backBtn.innerHTML = "← Back to Categories";
         } else if (referrer && referrer !== window.location.href) {
@@ -500,30 +502,49 @@ function navigation_from_single_product() {
     <?php
 }
 
-/** 
- * Highlight the respective categories 
+/**
+ * Highlight the respective categories
  **/
-//add_action('wp_footer', 'categories_selection');
-/*function categories_selection() {
-    // Only run this on the Categories page
-    if (!is_page('categories')) return;
+/**
+ * Highlight and persist the active category tab across pagination
+ **/
+add_action('wp_footer', 'categories_selection');
+function categories_selection() {
+    // Target the categories page or WooCommerce category view
+    if (!is_page('categories') && !is_shop()) return;
     ?>
     <script>
     jQuery(document).ready(function($) {
+
         // --- 1. SAVE SELECTION ---
         // Save Main Elementor Tab
-        $(document).on('click', '.elementor-tab-title', function() {
+        $(document).on('click', '.elementor-tab-title', function(e) {
+            // Ignore programmatic clicks during tab restoration
+            if (e.isTrigger) return;
+
             var mainTabId = $(this).attr('data-tab');
-            sessionStorage.setItem('vp_main_tab', mainTabId);
-            // Clear sub-tab if we switch main categories
-            sessionStorage.removeItem('vp_sub_tab');
+            if (mainTabId) {
+                sessionStorage.setItem('vp_main_tab', mainTabId);
+                sessionStorage.removeItem('vp_sub_tab');
+            }
         });
 
-        // Save Sub-Category Button (Orange/Yellow buttons)
-        // We target the Elementor button class or your custom class
-        $(document).on('click', '.elementor-button, .sub-cat-button', function() {
-            var subTabId = $(this).attr('id') || $(this).text().trim();
-            sessionStorage.setItem('vp_sub_tab', subTabId);
+        // Save Sub-Category Button
+        $(document).on('click', '.elementor-button, .sub-cat-button', function(e) {
+            if (e.isTrigger) return;
+
+            var subTabId = $(this).attr('id') || $.trim($(this).text());
+            if (subTabId) {
+                sessionStorage.setItem('vp_sub_tab', subTabId);
+            }
+        });
+
+        // Save active tab when pagination links are clicked
+        $(document).on('click', '.woocommerce-pagination a, .page-numbers a', function() {
+            var activeMain = $('.elementor-tab-title.elementor-active').attr('data-tab');
+            if (activeMain) {
+                sessionStorage.setItem('vp_main_tab', activeMain);
+            }
         });
 
         // --- 2. RESTORE SELECTION ---
@@ -532,32 +553,111 @@ function navigation_from_single_product() {
             var savedSub = sessionStorage.getItem('vp_sub_tab');
 
             if (savedMain) {
-                var mainTab = $('.elementor-tab-title[data-tab="' + savedMain + '"]');
-                if (mainTab.length > 0 && !mainTab.hasClass('elementor-active')) {
-                    mainTab.click();
-                }
+                var $mainTab = $('.elementor-tab-title[data-tab="' + savedMain + '"]');
 
-                // If a sub-tab was also saved, wait for main content to reveal then click it
-                if (savedSub) {
-                    setTimeout(function() {
-                        // Find by ID first, then by matching text inside the button
-                        var subTab = $('#' + savedSub).length ? $('#' + savedSub) : 
-                                     $('.elementor-button:contains("' + savedSub + '")');
-                        
-                        if (subTab.length > 0) {
-                            subTab.click();
-                        }
-                    }, 500); // 500ms delay to allow Elementor animations to finish
+                if ($mainTab.length > 0) {
+                    if (!$mainTab.hasClass('elementor-active')) {
+                        // Use triggerHandler or native click without triggering the save loop
+                        $mainTab.trigger('click');
+                    }
+
+                    if (savedSub) {
+                        setTimeout(function() {
+                            var $subTab = $('#' + CSS.escape(savedSub)).length
+                                ? $('#' + CSS.escape(savedSub))
+                                : $('.elementor-button:contains("' + savedSub + '")');
+
+                            if ($subTab.length > 0) {
+                                $subTab.trigger('click');
+                            }
+                        }, 300);
+                    }
                 }
             }
         }
 
-        // Run the restore function after a short delay on page load
-        setTimeout(restoreCategoriesTabs, 600);
+        // Run after initial page and Elementor frontend initializations complete
+        if (window.elementorFrontend) {
+            restoreCategoriesTabs();
+        } else {
+            $(window).on('elementor/frontend/init', restoreCategoriesTabs);
+            // Fallback for non-Elementor pages or standard load
+            setTimeout(restoreCategoriesTabs, 400);
+        }
     });
     </script>
     <?php
-}*/
+}
+
+/**
+ * Automatically append selected category parameter to WooCommerce pagination links
+ */
+add_filter('paginate_links', 'preserve_category_param_in_pagination');
+function preserve_category_param_in_pagination($link) {
+    if (isset($_GET['select_cat']) && !empty($_GET['select_cat'])) {
+        $link = add_query_arg('select_cat', sanitize_text_field($_GET['select_cat']), $link);
+    }
+    return $link;
+}
+
+/**
+ * Selecting the respective categories tab while using the pagination links
+ */
+add_action('wp_footer', 'categories_selection_fixed');
+function categories_selection_fixed() {
+    if (!is_page('categories') && !is_shop()) return;
+    ?>
+    <script>
+    jQuery(document).ready(function($) {
+
+        // Helper: Get parameter from current URL
+        function getUrlParameter(name) {
+            var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+            return results ? decodeURIComponent(results[1]) : null;
+        }
+
+        // 1. Get active category from URL first, fallback to SessionStorage
+        var activeCat = getUrlParameter('select_cat') || sessionStorage.getItem('vp_active_cat');
+
+        if (activeCat) {
+            sessionStorage.setItem('vp_active_cat', activeCat);
+
+            // Highlight/activate matching button
+            var $activeBtn = $('.elementor-button, .sub-cat-button').filter(function() {
+                var btnText = $.trim($(this).text()).toLowerCase();
+                var btnId = ($(this).attr('id') || '').toLowerCase();
+                return btnText === activeCat.toLowerCase() || btnId === activeCat.toLowerCase();
+            });
+
+            if ($activeBtn.length) {
+                $activeBtn.addClass('active-category-btn');
+            }
+        }
+
+        // 2. Save category when user clicks any category button
+        $(document).on('click', '.elementor-button, .sub-cat-button', function() {
+            var catName = $(this).attr('id') || $.trim($(this).text());
+            sessionStorage.setItem('vp_active_cat', catName);
+        });
+
+        // 3. Attach category parameter to pagination links dynamically (fallback if PHP filter is not used)
+        $(document).on('click', '.woocommerce-pagination a, .page-numbers a', function(e) {
+            var savedCat = sessionStorage.getItem('vp_active_cat');
+            if (savedCat) {
+                var href = $(this).attr('href');
+                if (href && href.indexOf('select_cat=') === -1) {
+                    e.preventDefault();
+                    var separator = href.indexOf('?') !== -1 ? '&' : '?';
+                    window.location.href = href + separator + 'select_cat=' + encodeURIComponent(savedCat);
+                }
+            }
+        });
+
+    });
+    </script>
+    <?php
+}
+
 
 add_action('wp_footer', 'vp_global_author_popup');
 function vp_global_author_popup() {
@@ -575,7 +675,7 @@ function vp_global_author_popup() {
     function toggleAuthorPopup(status, name = '', bio = '') {
         const popup = document.getElementById('author-popup');
         const overlay = document.getElementById('author-overlay');
-        
+
         if (status === 'open') {
             document.getElementById('v-author-name').innerText = name;
             document.getElementById('v-author-bio').innerHTML = bio;
